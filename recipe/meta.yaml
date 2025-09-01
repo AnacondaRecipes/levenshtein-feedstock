@@ -51,10 +51,15 @@ test:
 
 about:
   home: https://github.com/maxbachmann/Levenshtein
-  summary: Python extension for computing string edit distances and similarities.
   license: GPL-2.0-or-later
+  license_family: GPL
   license_file: COPYING
+  summary: Python extension for computing string edit distances and similarities.
+  description: | 
+    The Levenshtein Python C extension module contains functions for fast
+    computation of Levenshtein distance and string similarity
   dev_url: https://github.com/maxbachmann/Levenshtein
+  doc_url: https://rapidfuzz.github.io/Levenshtein
 
 extra:
   recipe-maintainers:
