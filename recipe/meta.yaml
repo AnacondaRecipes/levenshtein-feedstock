@@ -38,10 +38,12 @@ requirements:
 test:
   imports:
     - Levenshtein
+  requires:
+    - python
+    - pip
   commands:
     - pip check
-  requires:
-    - pip
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
 
 about:
   home: https://github.com/maxbachmann/Levenshtein
