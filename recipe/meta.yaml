@@ -1,51 +1,64 @@
-{% set name = "Levenshtein" %}
-{% set version = "0.20.9" %}
+{% set name = "levenshtein" %}
+{% set version = "0.27.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Levenshtein-{{ version }}.tar.gz
-  sha256: 70a8ad5e28bb76d87da1eb3f31de940836596547d6d01317c2289f5b7cd0b0ea
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3e18b73564cfc846eec94dd13fab6cb006b5d2e0cc56bad1fd7d5585881302e3
 
 build:
+  skip: true  # [py<39]
   number: 0
   script:
-    - {{ PYTHON }} -m pip install . -vvv
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - python
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ stdlib('c') }}
     - cmake
-    - make
+    - make  # [unix]
   host:
     - pip
     - python
-    - scikit-build
+    - scikit-build-core >=0.11
+    - cython >=3.0.12,<3.1.0
     - wheel
     - setuptools
   run:
     - python
-    - rapidfuzz >=2.0.1,<3.0.0
+    - rapidfuzz >=3.9.0,<4.0.0
 
 test:
+  source_files:
+    - tests
   imports:
     - Levenshtein
+  requires:
+    - python
+    - pip
+    - pytest
   commands:
     - pip check
-  requires:
-    - pip
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest -vv tests
 
 about:
   home: https://github.com/maxbachmann/Levenshtein
-  summary: Python extension for computing string edit distances and similarities.
   license: GPL-2.0-or-later
+  license_family: GPL
   license_file: COPYING
+  summary: Python extension for computing string edit distances and similarities.
+  description: | 
+    The Levenshtein Python C extension module contains functions for fast
+    computation of Levenshtein distance and string similarity
   dev_url: https://github.com/maxbachmann/Levenshtein
+  doc_url: https://rapidfuzz.github.io/Levenshtein
 
 extra:
   recipe-maintainers:
