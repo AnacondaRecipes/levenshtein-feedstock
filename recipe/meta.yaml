@@ -1,13 +1,13 @@
-{% set name = "Levenshtein" %}
+# Use lowercase name
+{% set name = "Levenshtein".lower() %}
 {% set version = "0.27.1" %}
-{% set nameLower = "levenshtein" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ nameLower[0] }}/{{ nameLower }}/{{ nameLower }}-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 3e18b73564cfc846eec94dd13fab6cb006b5d2e0cc56bad1fd7d5585881302e3
 
 build:
