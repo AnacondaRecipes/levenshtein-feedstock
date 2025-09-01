@@ -14,7 +14,7 @@ build:
   skip: true  # [py<39]
   number: 0
   script:
-    - {{ PYTHON }} -m pip install . -vvv
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vvv
 
 requirements:
   build:
